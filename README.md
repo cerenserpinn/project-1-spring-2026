@@ -1,7 +1,11 @@
 Ceren Serpin 
 Programming Assignment 1
 
-Summary: I implemented a templated Points2D<Objects> class that stores a dynamic sequence of 2D points, supports the Big five, indexing, addition of 2 sequences and stream input/output.
+Summary: I implemented a templated Points2D<Objects> class that stores a list of 2D points using dynamic memory. 
+- Big five
+- indexing
+- addition of 2 sequences
+- stream input/output.
 
 **Big Five**
 Implemented all 5 special member functions
