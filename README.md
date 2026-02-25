@@ -1,39 +1,47 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9916143&assignment_repo_type=AssignmentRepo)
-# Assignment 1
+Ceren Serpin 
+Programming Assignment 1
 
-## Information about the repository
+Summary: I implemented a templated Points2D<Objects> class that stores a dynamic sequence of 2D points, supports the Big five, indexing, addition of 2 sequences and stream input/output.
 
-This repository contains the following:
-- Starter code: `points2d.h`, `test_points2d.cc`,`test_input_file.txt`, `expected_output.txt`, `Makefile` and `README.md`
-- Assignment specification: `Spring23-Assignment1.pdf`
+**Big Five**
+Implemented all 5 special member functions
+1. Default constructor: Sets sequence_ = nullptr and size_= 0
 
-## Running the assignment
+2. Destructor: delete[] sequence_ to free heap memory.
 
-You will use this exact `Makefile` for your Assignment 1. Failure to do so will result in *deduction* of points.
+3. Copy Constructor: Allocations a new heap array of the same size, and copies each point (deep copy).
+-Also ensures the new object owns its own memory.
 
-To compile on terminal, type:
+4. Copy Assignment:
+- Handles self assignment
+- Uses a copy and swap approach: makes a copy of rhs, swaps pointers and sizes
 
-```bash
-make clean
-make all
-```
+5. Move Constructor:
+- Transfers the pointer and size from rhs to the new object
+- Sets rhs.sequence_ = nullptr and rhs.size_ = 0 to prevent a double deletion
 
-To delete executables and object files, type:
+6. Move Assignment:
+- Swaps sequence and size with the rhs object
+- Transfers ownership
 
-```bash
-make clean
-```
+**Indexing**
+Both of the following cuntions check bounds and abort if out of range.
+-- const std::array<Object, 2> &operator[](size_t location) const
+-- std::array<Object, 2> &operator[](size_t location)
 
-To run, type:
+**Addition**
+- operator+ returns a new Points2D object: adds (x1 + x2, y1 + y2). if one is longer the remaining points are added (unchanged)
+- Computing p_min(overlap) and p_max(result)
 
-```bash
-./test_points2d
-```
+**Output**
+operator<<
+- for an empty object, prints ()
+- otherwise prints each point (x,y) (x,y(
+- ends outout with a new line
 
-## Providing Input from Standard Input
-
-To run with a given file that is redirected to standard input:
-
-```bash
-./test_points2d < test_input_file.txt
-```
+**Input**
+- Reads input by first reading the number of points (n) then reads n pairs as object values
+Process:
+- Allocates a new array new_sequence of size n
+- if reading fails while reading pairs, it deletes new_sequence and returns to avoid leaks
+- Replaces old data by deleting some_points.sequence_ and assigning the new array 
