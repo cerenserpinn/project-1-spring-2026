@@ -1,5 +1,5 @@
 // Ceren Serpin
-// This class is like a container that holds a bunch of 2D points with two values
+// This class holds a bunch of 2D points with pair values
 // Can Add two groups of points together, print them out, copy them, move them, and read them from input
 
 
@@ -14,7 +14,7 @@
 
 #include <cstdlib>
 #include <utility>
-// ADDING A NEW COMMENT
+
 namespace teaching_project
 {
 
