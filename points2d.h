@@ -81,7 +81,7 @@ namespace teaching_project
         // Move-constructor.
         // // take the memory from another object
         // no copy
-        Points2D(Points2D &&rhs) noexcept : sequence_(rhs.sequence_),
+        Points2D(Points2D &&rhs) : sequence_(rhs.sequence_),
                                             size_(rhs.size_)
         {
             // clear old object
@@ -91,7 +91,7 @@ namespace teaching_project
 
         // Move-assignment.
         // Just use std::swap() for all variables.
-        Points2D &operator=(Points2D &&rhs) noexce
+        Points2D &operator=(Points2D &&rhs)
         {
             if (this != &rhs)
             {
