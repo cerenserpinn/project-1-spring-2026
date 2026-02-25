@@ -209,7 +209,7 @@ namespace teaching_project
         {
             if (some_points.size_ == 0)
             {
-                out << "()";
+                out << "()\n";
                 return out;
             }
 
@@ -221,6 +221,7 @@ namespace teaching_project
                     out << " ";
                 }
             }
+            out << "\n";
             return out;
         }
 
