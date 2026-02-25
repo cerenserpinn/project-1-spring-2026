@@ -198,7 +198,6 @@ namespace teaching_project
         {
             if (some_points.size_ == 0)
             {
-                out << "()\n";
                 return out;
             }
 
