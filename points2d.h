@@ -2,7 +2,6 @@
 // This class holds a bunch of 2D points with pair values
 // Can Add two groups of points together, print them out, copy them, move them, and read them from input
 
-
 #ifndef CSCI335_HOMEWORK1_POINTS2D_H_
 #define CSCI335_HOMEWORK1_POINTS2D_H_
 
@@ -31,8 +30,8 @@ namespace teaching_project
         // Zero-parameter constructor.
         // Set size to 0.
 
-        //Default constructor
-        // Starts with no points
+        // Default constructor
+        //  Starts with no points
         Points2D() : sequence_(nullptr),
                      size_(0) {}
 
@@ -62,7 +61,7 @@ namespace teaching_project
         // return *this;
         // }
 
-        // replaces current obj wwith copy 
+        // replaces current obj wwith copy
         Points2D &operator=(const Points2D &rhs)
         {
             // if self assignment - do nothing
@@ -71,7 +70,7 @@ namespace teaching_project
                 return *this;
             }
             // deep copy
-            Points2D copy(rhs); 
+            Points2D copy(rhs);
             // swap the data
             std::swap(sequence_, copy.sequence_);
             std::swap(size_, copy.size_);
@@ -82,7 +81,7 @@ namespace teaching_project
         // // take the memory from another object
         // no copy
         Points2D(Points2D &&rhs) : sequence_(rhs.sequence_),
-                                            size_(rhs.size_)
+                                   size_(rhs.size_)
         {
             // clear old object
             rhs.sequence_ = nullptr;
@@ -102,8 +101,7 @@ namespace teaching_project
             return *this;
         }
 
-
-        // Destructor 
+        // Destructor
         // Clean memory when obj is destroyed
         ~Points2D()
         {
@@ -111,6 +109,13 @@ namespace teaching_project
         }
 
         // End of big-five.
+
+        //extra constructor 
+        explicit Points2D(size_t n) : sequence_(nullptr), size_(n){
+            if (n > 0){
+                sequence_ = new std::array<Object, 2>[n];
+            }
+        }
 
         // One parameter constructor.
         // Creates a points2D obj with one point
@@ -131,7 +136,7 @@ namespace teaching_project
         // const version.
         // abort() if out-of-range.
 
-        // Access a point using index 
+        // Access a point using index
         const std::array<Object, 2> &operator[](size_t location) const
         {
             // abort if its out of range
@@ -150,15 +155,13 @@ namespace teaching_project
             }
             return sequence_[location];
         }
-        
-
 
         //  @c1: A sequence.
         //  @c2: A second sequence.
         //  @return their sum. If the sequences are not of the same size, append the
         //    result with the remaining part of the larger sequence.
 
-        //Add two objects together
+        // Add two objects together
         friend Points2D operator+(const Points2D &c1, const Points2D &c2)
         {
             Points2D results;
@@ -229,32 +232,45 @@ namespace teaching_project
         // Read a chain from an input stream (e.g., standard input).
         friend std::istream &operator>>(std::istream &in, Points2D &some_points)
         {
-            size_t n;
-            if (!(in >> n))
+            if (some_points.size_ == 0)
             {
-                return in;
-            }
-            std::array<Object, 2> *new_sequence = nullptr;
-            if (n > 0)
-            {
-                new_sequence = new std::array<Object, 2>[n];
-            }
-            // reaad each point
-            for (size_t i = 0; i < n; ++i)
-            {
-                Object x, y;
-                if (!(in >> x >> y)){
-                    delete[] new_sequence; // stop if the input is failing
+                size_t n;
+                if (!(in >> n))
+                {
                     return in;
                 }
-                
-                new_sequence[i] = {x, y};
-            }
-            // delete old data, then replace
-            delete[] some_points.sequence_;
-            some_points.sequence_ = new_sequence;
-            some_points.size_ = n;
+                std::array<Object, 2> *new_sequence = (n > 0) ? new std::array<Object, 2>[n] : nullptr;
 
+                for (size_t i = 0; i < n; ++i)
+                {
+                    Object x, y;
+                    if (!(in >> x >> y))
+                    {
+                        delete[] new_sequence;
+                        return in;
+                    }
+                    new_sequence[i] = {x, y};
+                }
+                delete[] some_points.sequence_;
+                some_points.sequence_ = new_sequence;
+                some_points.size_ = n;
+
+                return in;
+            }
+
+            if (some_points.sequence_ == nullptr)
+            {
+                some_points.sequence_ = new std::array<Object, 2>[some_points.size_];
+            }
+            for (size_t i = 0; i < some_points.size_; ++i)
+            {
+                Object x, y;
+                if (!(in >> x >> y))
+                {
+                    return in;
+                }
+                some_points.sequence_[i] = {x, y};
+            }
             return in;
         }
 
