@@ -193,6 +193,7 @@ namespace teaching_project
 
         // Overloading the << operator.
         // Print the points
+
         friend std::ostream &operator<<(std::ostream &out, const Points2D &some_points)
         {
             if (some_points.size_ == 0)
@@ -231,7 +232,11 @@ namespace teaching_project
             for (size_t i = 0; i < n; ++i)
             {
                 Object x, y;
-                in >> x >> y;
+                if (!(in >> x >> y)){
+                    delete[] new_sequence; // stop if the input is failing
+                    return in;
+                }
+                
                 new_sequence[i] = {x, y};
             }
             // delete old data, then replace
