@@ -141,6 +141,17 @@ namespace teaching_project
             }
             return sequence_[location];
         }
+        std::array<Object, 2> &operator[](size_t location)
+        {
+            // abort if its out of range
+            if (location >= size_)
+            {
+                std::abort();
+            }
+            return sequence_[location];
+        }
+        
+
 
         //  @c1: A sequence.
         //  @c2: A second sequence.
@@ -198,7 +209,7 @@ namespace teaching_project
         {
             if (some_points.size_ == 0)
             {
-                out << "()\n";
+                out << "()";
                 return out;
             }
 
@@ -210,7 +221,6 @@ namespace teaching_project
                     out << " ";
                 }
             }
-           out << "\n";
             return out;
         }
 
