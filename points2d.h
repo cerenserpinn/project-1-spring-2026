@@ -210,7 +210,7 @@ namespace teaching_project
                     out << " ";
                 }
             }
-            out << "\n";
+           
             return out;
         }
 
